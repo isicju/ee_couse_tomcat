@@ -1,6 +1,7 @@
 package com.eecourse.rest;
 
 import com.eecourse.rest.dao.UsersDAO;
+import com.google.gson.Gson;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -12,6 +13,8 @@ public class SimpleRestApi {
     @GET
     public Response getMsg() {
         List<UsersDAO.Employee> employeeList = UsersDAO.getEmployees();
-        return Response.status(200).entity("data size: " + employeeList.size()).build();
+        Gson gsonConverter = new Gson();
+        String employeeJson = gsonConverter.toJson(employeeList);
+        return Response.status(200).entity(employeeJson).build();
     }
 }
